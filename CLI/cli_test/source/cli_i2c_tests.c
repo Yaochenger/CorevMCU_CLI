@@ -372,7 +372,7 @@ static void i2cm0_test_all(const struct cli_cmd_entry *pEntry)
 
 static void i2cm1_test_all(const struct cli_cmd_entry *pEntry)
 {
-#if 0
+#ifdef PKG_USING_CorevMCU_CLI
 	hal_setpinmux(46, 2);
 	hal_setpinmux(47, 2);
 
