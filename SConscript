@@ -2,13 +2,16 @@ import os
 from building import *
 
 cwd = GetCurrentDir()
-objs = []
-list = os.listdir(cwd)
+src	= Glob('*.c')
+src += Glob(os.path.join("cli_test", "source", "*.c"))
+src += Glob(os.path.join("libs", "cli", "source","*.c"))
+src += Glob(os.path.join("libs","utils", "source", "*.c"))
 
-if GetDepend('PKG_USING_CorevMCU_CLI'):
-	for d in list:
-		path = os.path.join(cwd, d)
-		if os.path.isfile(os.path.join(path, 'SConscript')):
-			objs = objs + SConscript(os.path.join(d, 'SConscript'))
+CPPPATH = [os.path.join(cwd, "cli_test", "include"),
+             os.path.join(cwd, "libs", "cli","include"),
+             os.path.join(cwd, "libs", "cli","include","cli"),
+             os.path.join(cwd, "libs", "utils","include")]
 
-Return('objs')
+group = DefineGroup('CorevMCU', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
